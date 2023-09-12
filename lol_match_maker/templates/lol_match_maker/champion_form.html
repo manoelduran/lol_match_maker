@@ -1,0 +1,31 @@
+{% extends 'lol_match_maker/base.html' %}
+
+{% block page_title %}
+Champion Form
+{% endblock page_title %}
+
+{% block content %}
+<div
+    style="display: flex; width: 100%; height: 100%; flex-direction: column; justify-content: center; align-items: center;">
+    <h1>Champion Form</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.non_field_errors }}
+
+        <div class="field" style="display: flex; flex-direction: column; justify-content: center; align-items: left;">
+            {{ form.name.label_tag }}
+            {{ form.name }}
+            {{ form.name.errors }}
+        </div>
+
+        <div class="field" style="display: flex; flex-direction: column; justify-content: center; align-items: left;">
+            {{ form.type.label_tag }}
+            {{ form.type }}
+            {{ form.type.errors }}
+        </div>
+
+        <input type="submit" value="Submit" style="margin-top: 10px;">
+    </form>
+</div>
+
+{% endblock content %}

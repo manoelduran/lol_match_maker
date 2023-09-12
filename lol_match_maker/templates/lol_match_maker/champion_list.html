@@ -1,0 +1,69 @@
+{% extends 'lol_match_maker/base.html' %}
+
+{% block page_title %}
+Lista de Campeões
+{% endblock page_title %}
+
+{% block content %}
+<div style="display: flex; align-items: center; justify-content: space-between;">
+    <h1>Lista de Campeões</h1>
+    <button class="btn-create-champion" onclick="redirectToChampionForm()">Criar Campeão</button>
+</div>
+
+{% if champion_list %}
+<table class="table" style="margin-top: 25px;">
+    <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Name</th>
+            <th scope="col">Type</th>
+            <th scope="col">Criado em</th>
+            <th scope="col">Ações</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for champion in champion_list %}
+        <tr>
+            <th scope="row">{{ champion.pk }}</th>
+            <td>{{ champion.name }}</td>
+            <td>{{ champion.type}}</td>
+            <td>{{ champion.created_at }}</td>
+            <td>
+                <buton class="btn-create-champion">Visualizar</buton>
+                <buton class="btn-create-champion" style="background-color: darkgreen; margin-left: 5px;">Editar</buton>
+                <buton class="btn-create-champion" style="background-color: darkred; margin-left: 5px;">Deletar</buton>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% else %}
+<p>Não há tarefas cadastradas</p>
+{% endif %}
+<script>
+    function redirectToChampionForm() {
+        window.location.href = "{% url 'champion_form' %}";
+    }
+</script>
+<style>
+    .btn-create-champion {
+        background-color: #007bff;
+        /* Cor de fundo azul */
+        color: #fff;
+        /* Cor do texto branco */
+        padding: 10px 20px;
+        /* Espaçamento interno do botão */
+        border: none;
+        /* Remove a borda */
+        border-radius: 5px;
+        /* Borda arredondada */
+        cursor: pointer;
+        /* Altera o cursor para uma mão ao passar o mouse */
+    }
+
+    .btn-create-champion:hover {
+        background-color: #0056b3;
+        /* Cor de fundo alterada no hover */
+    }
+</style>
+{% endblock content %}
