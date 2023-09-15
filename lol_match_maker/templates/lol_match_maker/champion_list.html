@@ -29,9 +29,11 @@ Lista de Campeões
             <td>{{ champion.type}}</td>
             <td>{{ champion.created_at }}</td>
             <td>
-                <buton class="btn-create-champion">Visualizar</buton>
-                <buton class="btn-create-champion" style="background-color: darkgreen; margin-left: 5px;">Editar</buton>
-                <buton class="btn-create-champion" style="background-color: darkred; margin-left: 5px;">Deletar</buton>
+                <button class="btn-create-champion">Show</button>
+                <button class="btn-create-champion" style="background-color: darkgreen; margin-left: 5px;" i
+                    onclick="redirectToUpdateChampionForm( {{champion.pk}} )">Edit</button>
+                <button class="btn-create-champion" style="background-color: darkred; margin-left: 5px;"
+                    onclick="redirectToDeleteChampion( {{champion.pk}} )">Delete</button>
             </td>
         </tr>
         {% endfor %}
@@ -43,6 +45,16 @@ Lista de Campeões
 <script>
     function redirectToChampionForm() {
         window.location.href = "{% url 'champion_form' %}";
+    }
+    function redirectToUpdateChampionForm(championId) {
+
+        window.location.href = `/update/${championId}/`;
+
+    }
+    function redirectToDeleteChampion(championId) {
+
+        window.location.href = `/delete/${championId}/`;
+
     }
 </script>
 <style>

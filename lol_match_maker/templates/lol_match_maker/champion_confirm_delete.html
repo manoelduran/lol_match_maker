@@ -1,0 +1,17 @@
+{% extends 'lol_match_maker/base.html' %}
+
+{% block page_title %}Delete Confirmation{% endblock page_title %}
+
+{% block content %}
+<div class="alert alert-danger">
+    <h2 class="alert-heading">Delete Confirmation</h2>
+    <p>You are about to delete the champion "{{ champion.name }}".</p>
+    <p>This action is irreversible. Are you sure you want to continue?</p>
+
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit" name="confirm_delete" class="btn btn-danger">Confirm Deletion</button>
+        <a href="{% url 'champion_list' %}" class="btn btn-secondary">Cancel</a>
+    </form>
+</div>
+{% endblock content %}

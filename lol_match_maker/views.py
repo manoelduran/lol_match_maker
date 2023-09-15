@@ -1,5 +1,5 @@
 from django.http import HttpResponse, HttpResponseRedirect
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.views import View
 from django.urls import reverse
 from .models import Champion
@@ -30,29 +30,32 @@ class ChampionCreateView(View):
         return render(request, 'lol_match_maker/champion_form.html', {'form': form})
 
 
-"""
 class ChampionUpdateView(View):
     def get(self, request, pk):
+        print('PK', pk)
         champion = get_object_or_404(Champion, pk=pk)
-        form = ChampionForm(instance=champion)
-        return render(request, 'champion_form.html', {'form': form, 'champion': champion})
+        print('champion', champion)
+        form = ChampionForm(
+            initial={'name': champion.name, 'type': champion.type})
+        return render(request, 'lol_match_maker/champion_form.html', {'form': form, 'champion': champion})
 
     def post(self, request, pk):
         champion = get_object_or_404(Champion, pk=pk)
-        form = ChampionForm(request.POST, instance=champion)
+        form = ChampionForm(request.POST)
         if form.is_valid():
-            form.save()
-            return HttpResponseRedirect(reverse('champion-list'))
-        return render(request, 'champion_form.html', {'form': form, 'champion': champion})
+            champion.name = form.cleaned_data['name']
+            champion.type = form.cleaned_data['type']
+            champion.save()
+            return HttpResponseRedirect(reverse("champion_list"))
+        return render(request, 'lol_match_maker/champion_form.html', {'form': form, 'champion': champion})
 
 
 class ChampionDeleteView(View):
     def get(self, request, pk):
         champion = get_object_or_404(Champion, pk=pk)
-        return render(request, 'champion_confirm_delete.html', {'champion': champion})
+        return render(request, 'lol_match_maker/champion_confirm_delete.html', {'champion': champion})
 
     def post(self, request, pk):
         champion = get_object_or_404(Champion, pk=pk)
         champion.delete()
-        return HttpResponseRedirect(reverse('champion-list'))
-  """
+        return HttpResponseRedirect(reverse("champion_list"))
