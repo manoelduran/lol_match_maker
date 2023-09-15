@@ -50,6 +50,26 @@ class ChampionUpdateView(View):
         return render(request, 'lol_match_maker/champion_form.html', {'form': form, 'champion': champion})
 
 
+class ChampionUpdateView(View):
+    def get(self, request, pk):
+        print('PK', pk)
+        champion = get_object_or_404(Champion, pk=pk)
+        print('champion', champion)
+        form = ChampionForm(
+            initial={'name': champion.name, 'type': champion.type})
+        return render(request, 'lol_match_maker/champion_form.html', {'form': form, 'champion': champion})
+
+    def post(self, request, pk):
+        champion = get_object_or_404(Champion, pk=pk)
+        form = ChampionForm(request.POST)
+        if form.is_valid():
+            champion.name = form.cleaned_data['name']
+            champion.type = form.cleaned_data['type']
+            champion.save()
+            return HttpResponseRedirect(reverse("champion_list"))
+        return render(request, 'lol_match_maker/champion_form.html', {'form': form, 'champion': champion})
+
+
 class ChampionDeleteView(View):
     def get(self, request, pk):
         champion = get_object_or_404(Champion, pk=pk)
