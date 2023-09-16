@@ -1,4 +1,7 @@
 .env
 .venv
+__pycache__
 db.sqlite3
 .vscode
+./lol_match_maker/__pycache__
+./setup/__pycache__
